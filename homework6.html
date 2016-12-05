@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Animals-AJAX-API</title>
+</head>
+<body>
+	
+	<h1>Get Cool GIFs of Movies!</h1>
+	
+	<button data-search="Jungle Book">Jungle Book</button>
+	<button data-search="Home Alone">Home Alone</button>
+	<button data-search="Harry Potter">Harry Potter</button>
+	<br>
+	<br>
+	<br>
+	<div id="Buttons">
+		<form id="movie-form">
+			<label for = "movie-input">Add an movie</label>
+			<input type = "text" id = "animal-input">
+			<input id = "addMovie" type = "submit" value = "submit">
+		</form>
+	</div>
+
+	<div id="gifArea"></div>
+	
+	<script src = 'http://code.jquery.com/jquery-2.1.3.min.js'></script>
+	<script type = "text/javascript">
+
+	$('button').on('click',function()
+	{
+		var localVar = $(this).data('search');
+		console.log(localVar);
+		var queryURL = 'http://api.giphy.com/v1/gifs/search?q='+localVar+'&api_key=dc6zaTOxFJmzC&limit=9';
+		
+		$.ajax({url: queryURL, method: 'GET'})
+		.done(function(response) 
+		{
+			for(var i=0; i<response.data.length; i++)
+			{ 
+				console.log(response);
+				$('#gifArea').prepend("<p>Rating: "+response.data[i].rating+"</p>");
+				$('#gifArea').prepend("<img src ='"+response.data[i].images.downsized.url+"'>");
+			}
+		});
+	})
+
+	var animals = ["Zebra", "Rhino", "Girafe", "Owl"];
+	console.log(animals);
+
+	</script>
+
+
+</body>
+</html>
